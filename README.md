@@ -1,9 +1,9 @@
 <p align="center"> 
-  <img alt="GitHub Activity Restore Logo" src="https://cdn-icons-png.flaticon.com/256/25/25231.png" height="200" width="200" style="border-radius:100%" >
+  <img alt="Github Recent Activity Extension Logo" src="https://cdn-icons-png.flaticon.com/256/25/25231.png" height="200" width="200" style="border-radius:100%" >
   
 </p>
 
-<h1 align="center"> GitHub Activity Restore</h1>
+<h1 align="center"> Github Recent Activity Extension</h1>
 
 <p align="center">
     <a href="https://go-skill-icons.vercel.app/">
@@ -34,8 +34,8 @@
 ### ❌ The Problem  
 GitHub's homepage sidebar used to show your **recent activity and pull requests**, making it easy to keep track of your work and contributions. However, this feature was removed, leaving users without a convenient way to quickly access their **open PRs, reviews, and recent activity** directly from the homepage.
 
-### ✅ The Solution: GitHub Activity Restore  
-**GitHub Activity Restore** is a **lightweight browser extension** that brings back the **Recent Activity** section to your GitHub homepage sidebar. It displays your **open pull requests, draft PRs, and recent contributions** in a clean, integrated interface that feels native to GitHub.
+### ✅ The Solution: Github Recent Activity Extension  
+**Github Recent Activity Extension** is a **lightweight browser extension** that brings back the **Recent Activity** section to your GitHub homepage sidebar. It displays your **open pull requests, draft PRs, and recent contributions** in a clean, integrated interface that feels native to GitHub.
 
 ### 🛠️ How It Works  
 🔹 **Seamless Integration** – Adds a "Recent Activity" section above the "Top Repositories" in your sidebar  
@@ -90,7 +90,7 @@ In the meantime, you can install it manually by loading it as an unpacked extens
 1. Open Chrome and navigate to `chrome://extensions/` 🌐
 2. Enable **Developer mode** by toggling the switch in the top right corner ⚙️
 3. Click **Load unpacked** 📂
-4. Locate and select the **GitHub Activity Restore** extension folder 📁
+4. Locate and select the **Github Recent Activity Extension** extension folder 📁
 
 ### Firefox
 
@@ -100,7 +100,7 @@ In the meantime, you can install it manually by loading it as a temporary add-on
 
 1. Open Firefox and navigate to `about:debugging#/runtime/this-firefox` 🌐
 2. Click **Load Temporary Add-on...** 📂
-3. Locate and select the **manifest.json** file in the **GitHub Activity Restore** extension folder 📄
+3. Locate and select the **manifest.json** file in the **Github Recent Activity Extension** extension folder 📄
 
 <!-- Usage -->
 <h2 id="usage"> :computer: Usage</h2>
