@@ -53,11 +53,8 @@ This extension is perfect for **developers, maintainers, and contributors** who 
 <!-- Preview -->
 <h2 id="preview"> :eye: Preview</h2>
 
-### Recent Activity Sidebar
-*Screenshot showing the Recent Activity section in the GitHub sidebar with PR list*
+https://github.com/user-attachments/assets/629ee241-17d8-403c-9a61-4ef19e208b78
 
-### PR Status Icons and Hover Cards
-*Screenshot showing different PR states (open/draft) with GitHub-style hover cards*
 
 <!-- Features -->
 <h2 id="features"> :star: Features</h2>
