@@ -1,5 +1,6 @@
 <p align="center"> 
-  <img alt="GitHub Activity Restore Logo" src="https://github.com/user-attachments/assets/github-activity-icon.png" height="200" width="200" style="border-radius:100%" >
+  <img alt="GitHub Activity Restore Logo" src="https://cdn-icons-png.flaticon.com/256/25/25231.png" height="200" width="200" style="border-radius:100%" >
+  
 </p>
 
 <h1 align="center"> GitHub Activity Restore</h1>
