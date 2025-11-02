@@ -90,7 +90,7 @@ In the meantime, you can install it manually by loading it as an unpacked extens
 1. Open Chrome and navigate to `chrome://extensions/` 🌐
 2. Enable **Developer mode** by toggling the switch in the top right corner ⚙️
 3. Click **Load unpacked** 📂
-4. Locate and select the **Github Recent Activity Extension** extension folder 📁
+4. Locate and select the **Github Recent Activity Extension** extension **chrome** folder 📁
 
 ### Firefox
 
@@ -100,7 +100,7 @@ In the meantime, you can install it manually by loading it as a temporary add-on
 
 1. Open Firefox and navigate to `about:debugging#/runtime/this-firefox` 🌐
 2. Click **Load Temporary Add-on...** 📂
-3. Locate and select the **manifest.json** file in the **Github Recent Activity Extension** extension folder 📄
+3. Locate and select the **manifest.json** file in the **Github Recent Activity Extension** extension **firefox** folder 📄
 
 <!-- Usage -->
 <h2 id="usage"> :computer: Usage</h2>
