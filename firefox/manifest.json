@@ -1,0 +1,38 @@
+{
+    "manifest_version": 3,
+    "name": "GitHub Activity Sidebar",
+    "version": "1.0",
+    "description": "Restores your recent GitHub activity feed on the homepage.",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://github.com/*",
+        "https://api.github.com/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://github.com/*"
+            ],
+            "js": [
+                "utils.js",
+                "api.js",
+                "ui.js",
+                "hovercards.js",
+                "content.js"
+            ],
+            "css": [
+                "style.css"
+            ]
+        }
+    ]
+}
