@@ -39,15 +39,17 @@ GitHub's homepage sidebar used to show your **recent activity and pull requests*
 
 ### 🛠️ How It Works  
 🔹 **Seamless Integration** – Adds a "Recent Activity" section above the "Top Repositories" in your sidebar  
-🔹 **Real-time Data** – Fetches your latest PRs and activity using GitHub's own APIs and page data  
+🔹 **Intelligent Data Fetching** – Uses multi-tier approach: GitHub web interface, Events API, and Search API for maximum reliability  
 🔹 **Native Feel** – Uses GitHub's authentic icons, colors, and styling for perfect integration  
 🔹 **Smart Display** – Shows PR status (open/draft), repository info, and includes hover cards for detailed previews  
+🔹 **URL-Based Filtering** – Efficient server-side filtering using GitHub's own search infrastructure  
 
 ### 🎯 Why Use It?  
 ✨ **Stay Productive** – Quick access to your active work without navigating multiple pages  
 ⚡ **Save Time** – Instantly see your open PRs and their status from the homepage  
-🎨 **Native Experience** – Looks and feels like a built-in GitHub feature  
+🎨 **Native Experience** – Looks and feels like a built-in GitHub feature with full theme support  
 🔄 **Always Updated** – Automatically refreshes to show your latest activity  
+🚀 **Production Ready** – Robust, secure architecture built for daily use  
 
 This extension is perfect for **developers, maintainers, and contributors** who want to quickly access their GitHub activity without losing the convenience that was once built into the platform! 🚀
 
@@ -66,17 +68,35 @@ https://github.com/user-attachments/assets/629ee241-17d8-403c-9a61-4ef19e208b78
 - ✅ **Repository Links** - Quick access to repository pages with hover previews
 - ✅ **Markdown Support** - Renders bold text and code snippets in PR titles
 
+### 🔽 **Advanced Filtering**
+- ✅ **Date Range Filters** - Show PRs from last 7 days, 30 days, 2 months (default), 3 months, 6 months, or custom timeframe
+- ✅ **Status Filtering** - Filter by open PRs, draft PRs, or both
+- ✅ **Author Type Filtering** - Show your authored PRs, assigned PRs, or PRs from others
+- ✅ **Result Limits** - Control how many PRs to display (5-20 PRs)
+- ✅ **Persistent Settings** - Filter preferences saved and synced across devices
+- ✅ **One-Click Reset** - Easily return to default GitHub-like behavior
+- ✅ **URL-Based Filtering** - Efficient server-side filtering using GitHub's search API
+- ✅ **Smart Query Building** - Dynamic query construction for optimal performance
+
 ### 🎨 **UI/UX Features**
 - ✅ **GitHub-Native Styling** - Uses GitHub's CSS variables and design system
+- ✅ **Dark Mode Support** - Automatic theme detection and seamless dark mode integration
 - ✅ **Responsive Layout** - Adapts to narrow sidebars with proper text wrapping
 - ✅ **Hover Cards** - GitHub-style previews for PRs and repositories
 - ✅ **Smart Navigation** - Opens links in the current tab with GitHub's navigation
+- ✅ **Filter Controls UI** - Clean popup interface for customizing PR display
+- ✅ **Status Indicators** - Visual feedback for active custom filters
+- ✅ **CSP Compliance** - Content Security Policy compliant architecture
 
 ### ⚙️ **Technical Features**
-- ✅ **Dual Data Sources** - Web scraping with API fallback for maximum reliability
+- ✅ **Multi-Tier Data Strategy** - Web scraping, Events API, and Search API with intelligent fallbacks
 - ✅ **Modular Architecture** - Clean, maintainable code split into focused modules
 - ✅ **Performance Optimized** - Minimal resource usage and fast loading
 - ✅ **Error Handling** - Graceful fallbacks when GitHub's structure changes
+- ✅ **Cross-Browser Support** - Chrome/Edge and Firefox compatibility
+- ✅ **Production-Ready Code** - Clean codebase with comprehensive error handling
+- ✅ **Manifest V3 Compliant** - Modern extension architecture for Chrome
+- ✅ **External Resource Management** - Externalized CSS and JavaScript for security compliance
 
 <!-- Installation -->
 <h2 id="install"> :hammer_and_wrench: Installation</h2>
@@ -112,17 +132,32 @@ In the meantime, you can install it manually by loading it as a temporary add-on
 4. **Click on any PR** to navigate directly to it
 5. **Hover over PRs or repositories** to see detailed preview cards
 
+### 🔽 **Using Filters**
+1. **Click the extension icon** in your browser toolbar to open the filter panel
+2. **Customize your preferences:**
+   - **Date Range:** Choose how far back to show PRs (default: 2 months, like GitHub)
+   - **PR Status:** Include/exclude open PRs or draft PRs
+   - **Author Type:** Show your PRs, assigned PRs, or others
+   - **Max Results:** Control how many PRs to display (5-20)
+3. **Click "Apply Filters"** to update your Recent Activity section
+4. **Use "Reset to Defaults"** to return to GitHub's original behavior
+
 ### 🎯 **What You'll See**
 - **🔀 Open PRs** - Your currently open pull requests with green icons
 - **📝 Draft PRs** - Your draft pull requests with gray icons  
 - **Repository Info** - Quick links to the repositories with hover previews
 - **Markdown Formatting** - Bold text and code snippets rendered properly
+- **Filter Status** - Visual indicator showing if custom filters are active
 
 ### ⚡ **Pro Tips**
 - The extension automatically updates when you navigate between GitHub pages
+- Filter settings are synced across all your devices
 - Works on all GitHub pages, but the sidebar is most visible on the homepage
+- Use custom date ranges to focus on recent work or see older PRs when needed
 - Hover over any PR or repository name for detailed information
 - Click repository names to quickly navigate to the repo
+- The extension supports both light and dark themes automatically
+- Filters use GitHub's own search infrastructure for fast, accurate results
 
 <!-- Authors -->
 <h2 id="authors"> :scroll: Authors</h2>

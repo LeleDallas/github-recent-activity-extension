@@ -11,21 +11,122 @@
     return;
   }
 
-  // Fetch user PRs by scraping GitHub's issues page (same as web interface)
-  const allPRs = await fetchPRsFromWebInterface(username);
-
-  // Fallback: if web interface parsing fails, try a simpler API approach
-  if (allPRs.length === 0) {
-    const fallbackPRs = await fetchPRsFromAPI(username);
-    allPRs.push(...fallbackPRs);
+  // Load user filters
+  let userFilters;
+  try {
+    const result = await chrome.storage.sync.get({ filters: null });
+    userFilters = result.filters;
+  } catch (error) {
+    console.error('GitHub Activity Extension: Failed to load user filters:', error);
+    userFilters = null;
   }
 
-  // Create and insert the activity card
-  const card = createActivityCard(allPRs);
+  // Function to refresh PRs with current filters
+  async function refreshPRs() {
+    try {
+      // Remove existing card if present
+      const existingCard = document.querySelector('.gh-activity-card');
+      if (existingCard) {
+        existingCard.remove();
+      }
 
-  // ✅ Insert BEFORE Top Repositories (above it)
-  topReposSection.before(card);
+      // Multi-tier fetching strategy
+      let allPRs = [];
+      
+      // Try web interface first
+      try {
+        allPRs = await fetchPRsFromWebInterface(username, userFilters);
+      } catch (error) {
+        console.error('GitHub Activity Extension: Web interface failed:', error);
+      }
 
-  // Initialize GitHub hovercards for our dynamically added elements
-  initializeHovercards(card);
+      // Fallback 1: Events API
+      if (allPRs.length === 0 && typeof fetchPRsFromEventsAPI === 'function') {
+        try {
+          const eventsPRs = await fetchPRsFromEventsAPI(username, userFilters?.dateRange);
+          allPRs.push(...eventsPRs);
+        } catch (error) {
+          console.error('GitHub Activity Extension: Events API failed:', error);
+        }
+      }
+
+      // Fallback 2: Standard API
+      if (allPRs.length === 0) {
+        try {
+          const fallbackPRs = await fetchPRsFromAPI(username, userFilters);
+          allPRs.push(...fallbackPRs);
+        } catch (error) {
+          console.error('GitHub Activity Extension: Standard API failed:', error);
+        }
+      }
+
+      // Apply user filters if available and filterPRs function exists
+      if (userFilters && typeof filterPRs === 'function') {
+        try {
+          allPRs = filterPRs(allPRs, userFilters);
+        } catch (error) {
+          console.error('GitHub Activity Extension: Filtering failed:', error);
+          // Apply basic max results as fallback
+          const maxResults = userFilters.maxResults === 'custom' 
+            ? Number.parseInt(userFilters.customMaxResults, 10) || 8
+            : Number.parseInt(userFilters.maxResults, 10) || 8;
+          allPRs = allPRs.slice(0, maxResults);
+        }
+      } else if (userFilters) {
+        // Fallback: apply basic filtering inline if filterPRs is not available
+        const maxResults = userFilters.maxResults === 'custom' 
+          ? Number.parseInt(userFilters.customMaxResults, 10) || 8
+          : Number.parseInt(userFilters.maxResults, 10) || 8;
+        allPRs = allPRs.slice(0, maxResults);
+      }
+
+      // Create and insert the activity card
+      const card = createActivityCard(allPRs);
+      if (!card) {
+        console.error('GitHub Activity Extension: Failed to create activity card');
+        return;
+      }
+      
+      topReposSection.before(card);
+
+      // Initialize GitHub hovercards for our dynamically added elements
+      try {
+        initializeHovercards(card);
+      } catch (error) {
+        console.warn('GitHub Activity Extension: Hovercards initialization failed:', error);
+      }
+    } catch (error) {
+      console.error('GitHub Activity Extension: Critical error in refreshPRs:', error);
+      // Show a basic error card
+      try {
+        const errorCard = createActivityCard([]);
+        if (errorCard) {
+          topReposSection.before(errorCard);
+        }
+      } catch (fallbackError) {
+        console.error('GitHub Activity Extension: Even fallback card creation failed:', fallbackError);
+      }
+    }
+  }
+
+  // Listen for filter updates from popup
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'updateFilters') {
+      userFilters = request.filters;
+      refreshPRs().then(() => {
+        sendResponse({ success: true });
+      }).catch((error) => {
+        console.error('GitHub Activity Extension: Refresh failed after filter update:', error);
+        sendResponse({ success: false, error: error.message });
+      });
+      return true; // Keep the message channel open for async response
+    }
+  });
+
+  // Initial load
+  try {
+    await refreshPRs();
+  } catch (error) {
+    console.error('GitHub Activity Extension: Initial load failed:', error);
+  }
 })();

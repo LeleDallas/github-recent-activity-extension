@@ -3,34 +3,218 @@
 
 <head>
     <title>GitHub Recent Activity Extension</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            min-width: 280px;
-            padding: 16px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f6f8fa;
-            margin: 0;
+        /* Popup styles */
+        :root {
+            /* Light theme colors (GitHub default) */
+            --color-canvas-default: #ffffff;
+            --color-canvas-subtle: #f6f8fa;
+            --color-border-default: #d0d7de;
+            --color-border-muted: #afb8c1;
+            --color-fg-default: #24292f;
+            --color-fg-muted: #656d76;
+            --color-accent-emphasis: #0969da;
+            --color-success-emphasis: #238636;
+            --color-success-emphasis-hover: #2ea043;
+            --color-neutral-emphasis: #24292f;
+            --color-neutral-emphasis-hover: #32383f;
+            --color-success-subtle: #dafbe1;
+            --color-success-fg: #116329;
+            --color-neutral-subtle: #f1f3f4;
         }
-        
+
+        /* Dark theme colors (GitHub dark) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-canvas-default: #0d1117;
+                --color-canvas-subtle: #161b22;
+                --color-border-default: #30363d;
+                --color-border-muted: #21262d;
+                --color-fg-default: #f0f6fc;
+                --color-fg-muted: #8b949e;
+                --color-accent-emphasis: #1f6feb;
+                --color-success-emphasis: #238636;
+                --color-success-emphasis-hover: #2ea043;
+                --color-neutral-emphasis: #f0f6fc;
+                --color-neutral-emphasis-hover: #e6edf3;
+                --color-success-subtle: #0f2a1a;
+                --color-success-fg: #2ea043;
+                --color-neutral-subtle: #21262d;
+            }
+        }
+
+        /* Override for users with GitHub dark theme in browser */
+        body[data-color-mode="dark"] {
+            --color-canvas-default: #0d1117;
+            --color-canvas-subtle: #161b22;
+            --color-border-default: #30363d;
+            --color-border-muted: #21262d;
+            --color-fg-default: #f0f6fc;
+            --color-fg-muted: #8b949e;
+            --color-accent-emphasis: #1f6feb;
+            --color-success-emphasis: #238636;
+            --color-success-emphasis-hover: #2ea043;
+            --color-neutral-emphasis: #f0f6fc;
+            --color-neutral-emphasis-hover: #e6edf3;
+            --color-success-subtle: #0f2a1a;
+            --color-success-fg: #2ea043;
+            --color-neutral-subtle: #21262d;
+        }
+
+        body {
+            min-width: 320px;
+            max-width: 400px;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--color-canvas-subtle);
+            color: var(--color-fg-default);
+            margin: 0;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
         h3 {
             margin: 0 0 12px 0;
-            color: #24292f;
+            color: var(--color-fg-default);
             font-size: 16px;
             font-weight: 600;
         }
-        
+
+        h4 {
+            margin: 16px 0 8px 0;
+            color: var(--color-fg-default);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
         p {
             margin: 0 0 16px 0;
-            color: #656d76;
+            color: var(--color-fg-muted);
             font-size: 14px;
             line-height: 1.5;
         }
-        
+
+        .filters-section {
+            background: var(--color-canvas-default);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .filter-group {
+            margin-bottom: 12px;
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--color-fg-default);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid var(--color-border-default);
+            border-radius: 4px;
+            font-size: 12px;
+            background: var(--color-canvas-default);
+            color: var(--color-fg-default);
+            box-sizing: border-box;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--color-accent-emphasis);
+            box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+        }
+
+        @media (prefers-color-scheme: dark) {
+
+            select:focus,
+            input:focus {
+                box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.12);
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            accent-color: var(--color-accent-emphasis);
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--color-fg-muted);
+            cursor: pointer;
+        }
+
+        .apply-button {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--color-success-emphasis);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .apply-button:hover {
+            background: var(--color-success-emphasis-hover);
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 6px 12px;
+            background: transparent;
+            color: var(--color-fg-muted);
+            border: 1px solid var(--color-border-default);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+
+        .reset-button:hover {
+            background: var(--color-canvas-subtle);
+            border-color: var(--color-border-muted);
+            color: var(--color-fg-default);
+        }
+
         .button {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #24292f;
+            background: var(--color-neutral-emphasis);
             color: white;
             border: none;
             border-radius: 6px;
@@ -43,36 +227,131 @@
             width: 100%;
             box-sizing: border-box;
         }
-        
+
         .button:hover {
-            background: #32383f;
+            background: var(--color-neutral-emphasis-hover);
         }
-        
+
         .button svg {
             width: 16px;
             height: 16px;
             flex-shrink: 0;
         }
-        
+
         .text {
             margin: 0;
             color: white;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .status-active {
+            background: var(--color-success-subtle);
+            color: var(--color-success-fg);
+        }
+
+        .status-default {
+            background: var(--color-neutral-subtle);
+            color: var(--color-fg-muted);
         }
     </style>
 </head>
 
 <body>
-    <h3>GitHub Recent Activity Extension</h3>
+    <h3>GitHub Recent Activity</h3>
+
+    <div id="filter-status" class="status-indicator status-default">
+        Using default filters
+    </div>
+
+    <div class="filters-section">
+        <h4>Filter Pull Requests</h4>
+
+        <div class="filter-group">
+            <label for="dateRange">Date Range</label>
+            <select id="dateRange">
+                <option value="all">All time</option>
+                <option value="7">Last 7 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="60" selected>Last 2 months</option>
+                <option value="90">Last 3 months</option>
+                <option value="180">Last 6 months</option>
+                <option value="custom">Custom days</option>
+            </select>
+            <input type="number" id="customDays" placeholder="Enter days" style="display: none; margin-top: 4px;"
+                min="1">
+        </div>
+
+        <div class="filter-group">
+            <label>PR Status</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showOpen" checked>
+                    <label for="showOpen">Open</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showDraft" checked>
+                    <label for="showDraft">Draft</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label>Author Type</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showAuthor" checked>
+                    <label for="showAuthor">My PRs</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showAssigned">
+                    <label for="showAssigned">Assigned</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showOthers">
+                    <label for="showOthers">Others</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label for="maxResults">Max Results</label>
+            <select id="maxResults">
+                <option value="5">5 PRs</option>
+                <option value="8" selected>8 PRs</option>
+                <option value="10">10 PRs</option>
+                <option value="15">15 PRs</option>
+                <option value="20">20 PRs</option>
+                <option value="custom">Custom amount</option>
+            </select>
+            <input type="number" id="customMaxResults" placeholder="Enter number"
+                style="display: none; margin-top: 4px;" min="1" max="50">
+        </div>
+
+        <button class="reset-button" id="resetFilters">Reset to Defaults</button>
+        <button class="apply-button" id="applyFilters">Apply Filters</button>
+    </div>
+
     <p>Extension is active when you visit github.com</p>
-    
-    <a href="https://github.com/LeleDallas" target="_blank" class="button">
+
+    <a href="https://github.com/LeleDallas" target="_blank" class="button" style="justify-content: center;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M12 0.296997C5.37 0.296997 0 5.67 0 12.297C0 17.6 3.438 22.097 8.205 23.682C8.805 23.795 9.025 23.424 9.025 23.105C9.025 22.82 9.015 22.065 9.01 21.065C5.672 21.789 4.968 19.455 4.968 19.455C4.422 18.07 3.633 17.7 3.633 17.7C2.546 16.956 3.717 16.971 3.717 16.971C4.922 17.055 5.555 18.207 5.555 18.207C6.625 20.042 8.364 19.512 9.05 19.205C9.158 18.429 9.467 17.9 9.81 17.6C7.145 17.3 4.344 16.268 4.344 11.67C4.344 10.36 4.809 9.29 5.579 8.45C5.444 8.147 5.039 6.927 5.684 5.274C5.684 5.274 6.689 4.952 8.984 6.504C9.944 6.237 10.964 6.105 11.984 6.099C13.004 6.105 14.024 6.237 14.984 6.504C17.264 4.952 18.269 5.274 18.269 5.274C18.914 6.927 18.509 8.147 18.389 8.45C19.154 9.29 19.619 10.36 19.619 11.67C19.619 16.28 16.814 17.295 14.144 17.59C14.564 17.95 14.954 18.686 14.954 19.81C14.954 21.416 14.939 22.706 14.939 23.096C14.939 23.411 15.149 23.786 15.764 23.666C20.565 22.092 24 17.592 24 12.297C24 5.67 18.627 0.296997 12 0.296997Z"
-                fill="white"></path>
+                fill="black"></path>
         </svg>
-        <p class="text">Created by LeleDallas</p>
+        <p class="text" style="color: black;">Created by LeleDallas</p>
     </a>
+
+    <script src="popup.js"></script>
 </body>
 
 </html>

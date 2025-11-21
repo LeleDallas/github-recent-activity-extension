@@ -24,10 +24,9 @@ function createActivityCard(allPRs) {
     </div>
     ${
       allPRs.length === 0
-        ? `<p class="gh-empty">No open or reviewed pull requests 🎉</p>`
+        ? `<p class="gh-empty">No open or reviewed pull requests match your filters 🎉</p>`
         : `<ul class="gh-activity-list">
           ${allPRs
-            .slice(0, 8)
             .map((pr) => {
               const prIcon = getPRIcon(pr);
               const processedTitle = processMarkdownTitle(pr.title);
